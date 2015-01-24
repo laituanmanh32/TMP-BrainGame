@@ -16,7 +16,15 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.widget.Toast;
+
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.model.GraphUser;
+
 import tmp.braingame.config.CameraConfig;
 
 public class GameActivity extends BaseGameActivity {
@@ -86,4 +94,30 @@ public class GameActivity extends BaseGameActivity {
 		ScenesManager.getInstance().getCurrentScene().onBackKeyPressed();
 	}
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+    }
+
+    public void facebookLogin() {
+        Session.openActiveSession(this, true, new Session.StatusCallback() {
+            @Override
+            public void call(Session session, SessionState state, Exception exception) {
+                if (session.isOpened()) {
+                    Request.executeMeRequestAsync(session, new Request.GraphUserCallback() {
+                        @Override
+                        public void onCompleted(GraphUser user, Response response) {
+                            if (user != null) {
+                                // CALLBACK: USER IS LOGGED IN
+                                // DO YOUR STUFF HERE
+                                // e.g. fbUsername = user.getFirstName();
+                                // this will save the users first name to a public variable fbUsername
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
 }
