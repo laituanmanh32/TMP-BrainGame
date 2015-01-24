@@ -145,6 +145,22 @@ public class GameSceneFactory {
 		return new GameQueue(result);
 	}
 
+	public List<String> getAllGameCatalog(){
+		return new ArrayList<String>(gameManager.keySet());
+	}
+	
+	public List<String> getAllGameOfCatalog(String pCatalog){
+		List<String> gameNameList = new ArrayList<String>();
+		List<GameInfo> gameInfo = gameManager.get(pCatalog);
+		
+		for (GameInfo game : gameInfo) {
+			gameNameList.add(game.Name);
+		}
+		
+		
+		return gameNameList;
+	}
+	
 	private GameBaseScene getGameInstance(String pClassPath)
 			throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException {
@@ -152,5 +168,6 @@ public class GameSceneFactory {
 		GameBaseScene game = (GameBaseScene) clzz.newInstance();
 		return game;
 	}
+	
 
 }
