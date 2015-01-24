@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -89,7 +90,7 @@ public class GameSceneFactory {
 		List<GameInfo> gameList = gameManager.get(pCatalog);
 		System.out.print(gameList.size());
 		for (GameInfo gameInfo : gameList) {
-			if (gameInfo.Name.equals(pName) ) {
+			if (gameInfo.Name.equals(pName)) {
 				try {
 					// Class<?> clazz = Class.forName(gameInfo.ClassPath);
 					// Constructor<?> ctor = clazz.getConstructor(String.class);
@@ -117,6 +118,39 @@ public class GameSceneFactory {
 			}
 		}
 		return null;
+	}
+
+	public GameQueue getAllRandomGame() {
+		List<String> gameCatalog = new ArrayList<String>(gameManager.keySet());
+		List<GameBaseScene> result = new ArrayList<GameBaseScene>();
+		Random ran = new Random();
+		for (String catalog : gameCatalog) {
+			try {
+				List<GameInfo> gameList = gameManager.get(catalog);
+				GameBaseScene game = getGameInstance(gameList.get(ran
+						.nextInt(gameList.size())).ClassPath);
+				result.add(game);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return new GameQueue(result);
+	}
+
+	private GameBaseScene getGameInstance(String pClassPath)
+			throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException {
+		Class clzz = Class.forName(pClassPath);
+		GameBaseScene game = (GameBaseScene) clzz.newInstance();
+		return game;
 	}
 
 }
