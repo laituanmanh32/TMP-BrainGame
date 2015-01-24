@@ -114,6 +114,7 @@ public class JumperGame extends GameBaseScene implements IOnSceneTouchListener {
 
 	private void createBackground() {
 		setBackground(new Background(Color.BLUE));
+		
 	}
 
 	private void createHUD() {
