@@ -1,9 +1,11 @@
 package tmp.braingame.game;
 
+import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 
 import tmp.braingame.main.ScenesManager;
 import tmp.braingame.scene.BaseScene;
@@ -15,8 +17,9 @@ public class FreakyShapeGame extends GameBaseScene implements IOnSceneTouchListe
     private Background createFromRGB(float r,float g,float b){
         return new Background(r/0xff,g/0xff,b/0xff);
     }
-    private Background bg_darkblue=createFromRGB(0x2c,0x3e,0x50);
+    private Background bg_darkblue=createFromRGB(0x2c, 0x3e, 0x50);
     private Background bg_lightred=createFromRGB(0xe7,0x4c,0x3c);//#e74c3c
+    private HUD gameHUD;
 
     @Override
     public void createScene() {
@@ -36,7 +39,11 @@ public class FreakyShapeGame extends GameBaseScene implements IOnSceneTouchListe
 
     @Override
     public void loadResouces() {
+        loadEntities();
+    }
 
+    private void loadEntities() {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/freaky/");
     }
 
     @Override
