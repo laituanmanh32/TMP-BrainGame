@@ -1,0 +1,7 @@
+<GameDeclare>
+	<Game>
+		<Name>Jumper Game</Name>
+		<Catalog>centralization</Catalog>
+		<ClassPath>tmp.braingame.game.JumperGame</ClassPath>
+	</Game>
+</GameDeclare>
