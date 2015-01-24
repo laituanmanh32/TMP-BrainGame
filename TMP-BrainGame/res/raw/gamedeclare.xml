@@ -4,4 +4,9 @@
 		<Catalog>centralization</Catalog>
 		<ClassPath>tmp.braingame.game.JumperGame</ClassPath>
 	</Game>
+    <Game>
+        <Name>Freaky Shape</Name>
+        <Catalog>centralization</Catalog>
+        <ClassPath>tmp.braingame.game.FreakyShapeGame</ClassPath>
+    </Game>
 </GameDeclare>
