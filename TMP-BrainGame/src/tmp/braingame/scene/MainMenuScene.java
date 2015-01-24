@@ -119,7 +119,7 @@ public class MainMenuScene extends BaseScene implements
 			float pMenuItemLocalX, float pMenuItemLocalY) {
 		switch (pMenuItem.getID()) {
 		case MENU_PLAY_DAILY:
-			GameQueue queue = GameSceneFactory.getInstance().getSpecificGame("centralization", "Jumper Game");
+			GameQueue queue = GameSceneFactory.getInstance().getAllRandomGame();
 			ScenesManager.getInstance().loadGameScene(mEngine, queue);
 			break;
 		default:
