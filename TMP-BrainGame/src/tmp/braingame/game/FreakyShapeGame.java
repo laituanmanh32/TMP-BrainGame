@@ -1,19 +1,31 @@
 package tmp.braingame.game;
 
+import android.util.Log;
+
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
+import org.andengine.opengl.texture.region.ITextureRegion;
 
+import tmp.braingame.main.ResourcesManager;
 import tmp.braingame.main.ScenesManager;
 import tmp.braingame.scene.BaseScene;
 
 /**
  * Created by HUNGPHONGPC on 24/01/2015.
  */
-public class FreakyShapeGame extends GameBaseScene implements IOnSceneTouchListener {
+public class FreakyShapeGame extends GameBaseScene {
+    private ButtonSprite button1;
+    private ButtonSprite button2;
+    private ITextureRegion button1texture;
+    private ITextureRegion button2texture;
+    private BuildableBitmapTextureAtlas buildBmp;
+
     private Background createFromRGB(float r,float g,float b){
         return new Background(r/0xff,g/0xff,b/0xff);
     }
@@ -25,7 +37,6 @@ public class FreakyShapeGame extends GameBaseScene implements IOnSceneTouchListe
     public void createScene() {
         createBackground();
         createHUD();
-        setOnSceneTouchListener(this);
     }
 
     //Tao giao dien game
@@ -42,8 +53,20 @@ public class FreakyShapeGame extends GameBaseScene implements IOnSceneTouchListe
         loadEntities();
     }
 
+    ButtonSprite.OnClickListener buttonclick=new ButtonSprite.OnClickListener(){
+        @Override
+        public void onClick(ButtonSprite pButtonSprite, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+            Log.d("BUTTON", "FUCK YOU");
+        }
+    };
     private void loadEntities() {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/freaky/");
+        buildBmp=new BuildableBitmapTextureAtlas(mActivity.getTextureManager(),512,512);
+        button1texture=BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildBmp,mActivity,"TMP.png");
+        button2texture=BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildBmp,mActivity,"TMP2.png");
+        button1=new ButtonSprite(20,20,button1texture,button2texture,vbom,buttonclick);
+        button2=new ButtonSprite(260,20,button1texture,button2texture,vbom,buttonclick);
+
     }
 
     @Override
@@ -71,8 +94,4 @@ public class FreakyShapeGame extends GameBaseScene implements IOnSceneTouchListe
         return ScenesManager.SceneType.SCENE_GAME;
     }
 
-    @Override
-    public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
-        return false;
-    }
 }
