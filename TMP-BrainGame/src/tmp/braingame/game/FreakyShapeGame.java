@@ -14,7 +14,6 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 
 import tmp.braingame.main.ResourcesManager;
 import tmp.braingame.main.ScenesManager;
-import tmp.braingame.scene.BaseScene;
 
 /**
  * Created by HUNGPHONGPC on 24/01/2015.

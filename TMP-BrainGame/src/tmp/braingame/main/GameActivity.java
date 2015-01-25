@@ -5,27 +5,23 @@ import java.io.IOException;
 import org.andengine.engine.Engine;
 import org.andengine.engine.LimitedFPSEngine;
 import org.andengine.engine.camera.BoundCamera;
-import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.engine.options.EngineOptions;
-import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
+import org.andengine.engine.options.resolutionpolicy.FixedResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
 
-import android.app.Activity;
+import tmp.braingame.config.CameraConfig;
 import android.content.Intent;
-import android.widget.Toast;
 
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
-
-import tmp.braingame.config.CameraConfig;
 
 public class GameActivity extends BaseGameActivity {
 
@@ -37,7 +33,7 @@ public class GameActivity extends BaseGameActivity {
 		camera = new BoundCamera(0, 0, CameraConfig.CAMERA_WIDTH,
 				CameraConfig.CAMERA_HEIGHT);
 		final EngineOptions engine = new EngineOptions(true,
-				CameraConfig.SCREEN_OERIENTATION, new FillResolutionPolicy(),
+				CameraConfig.SCREEN_OERIENTATION, new FixedResolutionPolicy(CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT),
 				camera);
 		engine.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);
 		engine.setWakeLockOptions(WakeLockOptions.SCREEN_ON);

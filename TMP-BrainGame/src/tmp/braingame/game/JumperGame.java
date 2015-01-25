@@ -2,7 +2,6 @@ package tmp.braingame.game;
 
 import java.io.IOException;
 
-import org.andengine.engine.camera.BoundCamera;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -50,7 +49,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
-import tmp.braingame.config.CameraConfig;
 import tmp.braingame.main.ResourcesManager;
 import tmp.braingame.main.ScenesManager;
 import tmp.braingame.main.ScenesManager.SceneType;
@@ -145,6 +143,7 @@ public class JumperGame extends GameBaseScene implements IOnSceneTouchListener {
 		levelLoader
 				.registerEntityLoader(new EntityLoader<SimpleLevelEntityLoaderData>(
 						LevelConstants.TAG_LEVEL) {
+					@Override
 					public IEntity onLoadEntity(
 							final String pEntityName,
 							final IEntity pParent,
@@ -168,6 +167,7 @@ public class JumperGame extends GameBaseScene implements IOnSceneTouchListener {
 		levelLoader
 				.registerEntityLoader(new EntityLoader<SimpleLevelEntityLoaderData>(
 						LevelConstants.TAG_LEVEL) {
+					@Override
 					public IEntity onLoadEntity(
 							final String pEntityName,
 							final IEntity pParent,
@@ -192,6 +192,7 @@ public class JumperGame extends GameBaseScene implements IOnSceneTouchListener {
 		levelLoader
 				.registerEntityLoader(new EntityLoader<SimpleLevelEntityLoaderData>(
 						TAG_ENTITY) {
+					@Override
 					public IEntity onLoadEntity(
 							final String pEntityName,
 							final IEntity pParent,
@@ -367,6 +368,7 @@ public class JumperGame extends GameBaseScene implements IOnSceneTouchListener {
 	// Collision event handler
 	private ContactListener contactListener() {
 		ContactListener contactListener = new ContactListener() {
+			@Override
 			public void beginContact(Contact contact) {
 				final Fixture x1 = contact.getFixtureA();
 				final Fixture x2 = contact.getFixtureB();
@@ -386,6 +388,7 @@ public class JumperGame extends GameBaseScene implements IOnSceneTouchListener {
 							&& x2.getBody().getUserData().equals("player")) {
 						mEngine.registerUpdateHandler(new TimerHandler(0.2f,
 								new ITimerCallback() {
+									@Override
 									public void onTimePassed(
 											final TimerHandler pTimerHandler) {
 										pTimerHandler.reset();
@@ -398,6 +401,7 @@ public class JumperGame extends GameBaseScene implements IOnSceneTouchListener {
 				}
 			}
 
+			@Override
 			public void endContact(Contact contact) {
 				final Fixture x1 = contact.getFixtureA();
 				final Fixture x2 = contact.getFixtureB();
@@ -410,10 +414,12 @@ public class JumperGame extends GameBaseScene implements IOnSceneTouchListener {
 				}
 			}
 
+			@Override
 			public void preSolve(Contact contact, Manifold oldManifold) {
 
 			}
 
+			@Override
 			public void postSolve(Contact contact, ContactImpulse impulse) {
 
 			}

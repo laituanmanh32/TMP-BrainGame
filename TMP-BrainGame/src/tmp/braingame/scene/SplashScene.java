@@ -8,6 +8,8 @@ import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.util.adt.color.Color;
 
 import tmp.braingame.config.CameraConfig;
@@ -17,18 +19,17 @@ import tmp.braingame.main.ScenesManager.SceneType;
 public class SplashScene extends BaseScene {
 	
 	private Font font;
-
+	private ITextureRegion splashRegion;
+	private BitmapTextureAtlas splashAtlas;
+	
 	@Override
 	public void createScene() {
-		setBackground(new Background(Color.YELLOW));
-		attachChild(new Text(CameraConfig.CAMERA_WIDTH / 2,
-				CameraConfig.CAMERA_HEIGHT / 2,
-				font,
-				"This is Splash Screen!", vbom));
+		attachChild(new Sprite(CameraConfig.CAMERA_WIDTH/2, CameraConfig.CAMERA_HEIGHT/2, splashRegion, vbom));
 	}
 
 	@Override
 	public void loadResouces() {
+		// Load font
 		FontFactory.setAssetBasePath("font/");
 		final ITexture fontTextTureManager = new BitmapTextureAtlas(
 				ResourcesManager.getInstance().gameActivity.getTextureManager(), 256, 256,
@@ -39,6 +40,13 @@ public class SplashScene extends BaseScene {
 				ResourcesManager.getInstance().gameActivity.getAssets(), "BADABB.TTF", 50, true,
 				Color.WHITE_ABGR_PACKED_INT, 2, Color.BLACK_ABGR_PACKED_INT);
 		font.load();
+		
+		// Load image...
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+		splashAtlas = new BitmapTextureAtlas(mActivity.getTextureManager(), 1024, 1024,TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		splashRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(splashAtlas, mActivity, "splash.png",0,0);
+		
+		splashAtlas.load();
 	}
 
 	@Override
@@ -67,8 +75,7 @@ public class SplashScene extends BaseScene {
 
 	@Override
 	public void unloadResources() {
-		// TODO Auto-generated method stub
-		
+		splashAtlas.unload();
 	}
 
 }
