@@ -19,6 +19,8 @@ import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.util.debug.Debug;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.Random;
 
 import tmp.braingame.main.ResourcesManager;
@@ -36,7 +38,28 @@ public class FreakyShapeGame extends GameBaseScene implements IOnSceneTouchListe
     private BitmapTextureAtlas buildBmp;
     private Text mQuestion;
     private GameData gameData;
-
+    private final String[] images={
+            "TMP_whiterectangle.png",
+            "TMP_redrectangle.png",
+            "TMP_pinkrectangle.png",
+            "TMP_purplerectangle.png",
+            "TMP_bluerectangle.png",
+            "TMP_tealrectangle.png",
+            "TMP_whitetriangle.png",
+            "TMP_redtriangle.png",
+            "TMP_pinktriangle.png",
+            "TMP_purpletriangle.png",
+            "TMP_bluetriangle.png",
+            "TMP_tealtriangle.png",
+            "TMP_tealtriangle.png",
+            "TMP_whitecircle.png",
+            "TMP_redcircle.png",
+            "TMP_pinkcircle.png",
+            "TMP_purplecircle.png",
+            "TMP_bluecircle.png",
+            "TMP_tealcircle.png"
+    };
+    private Dictionary<String,Sprite> sprites;
 
     private Background createFromRGB(float r,float g,float b){
         return new Background(r/0xff,g/0xff,b/0xff);
@@ -67,16 +90,11 @@ public class FreakyShapeGame extends GameBaseScene implements IOnSceneTouchListe
                 mQuestion.setPosition(20+mQuestion.getWidth()/2,400);
                 String file1=gameData.getFirstAnswerFileName();
                 String file2=gameData.getSecondAnswerFileName();
-                /*if (shape1!=null){
-                    button1.detachChild(shape1);
-                    button1.detachChild(shape2);
-                }
-                shape1=new Sprite(40,40,
-                        BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildBmp,mActivity,file1,40,40),vbom);
-                shape2=new Sprite(40,40,
-                        BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildBmp,mActivity,file2,40,40),vbom);
-                button1.attachChild(shape1);
-                button2.attachChild(shape2);*/
+                /*button1.detachChildren();
+                button2.detachChildren();
+                button1.attachChild(sprites.get(file1));
+                button2.attachChild(sprites.get(file2));*/
+
             }
         });
         gameData.GenerateRandomData();
@@ -123,7 +141,13 @@ public class FreakyShapeGame extends GameBaseScene implements IOnSceneTouchListe
 
         mQuestion=new Text(0, 0, mResouceManager.generalFont,
                 "Game Over!",100, vbom);
+
         mQuestion.setPosition(0,400);
+        sprites=new Hashtable<String, Sprite>();
+        for(String s:images){
+            sprites.put(s,new Sprite(40,40,
+                    BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildBmp,mActivity,s,0,0),vbom));
+        }
     }
 
     @Override
