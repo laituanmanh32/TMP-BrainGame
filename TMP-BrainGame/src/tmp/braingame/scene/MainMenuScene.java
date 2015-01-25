@@ -17,6 +17,7 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
 
+import tmp.braingame.main.GameActivity;
 import tmp.braingame.main.GameSceneFactory;
 import tmp.braingame.main.ResourcesManager;
 import tmp.braingame.main.ScenesManager;
@@ -39,6 +40,7 @@ public class MainMenuScene extends BaseScene implements
 
 	private final int MENU_PLAY_DAILY = 0;
 	private final int MENU_PLAY_PRACTICE = 1;
+    private final int MENU_LOGIN_FB = 3;
 
 	private int currentCatalog = 0;
 
@@ -113,9 +115,12 @@ public class MainMenuScene extends BaseScene implements
 				1.2f, 1);
 		final IMenuItem pratice = new ScaleMenuItemDecorator(new TextMenuItem(
 				MENU_PLAY_PRACTICE, font, "Pratice", vbom), 1.2f, 1);
+        final IMenuItem login = new ScaleMenuItemDecorator(new TextMenuItem(
+                MENU_LOGIN_FB, font, "Login to FB!", vbom), 1.2f, 1);
 
 		menuMain.addMenuItem(dailyPlay);
 		menuMain.addMenuItem(pratice);
+		menuMain.addMenuItem(login);
 
 		// ----------------------------------
 		// Create catalog menu scene and game of that catalog
@@ -187,6 +192,10 @@ public class MainMenuScene extends BaseScene implements
 				break;
 			case MENU_PLAY_PRACTICE:
 				setChildScene(menuCatalog);
+                break;
+            case MENU_LOGIN_FB:
+                ResourcesManager.getInstance().gameActivity.facebookLogin();
+                break;
 			default:
 				break;
 			}
