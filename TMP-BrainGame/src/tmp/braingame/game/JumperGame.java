@@ -337,11 +337,22 @@ public class JumperGame extends GameBaseScene implements IOnSceneTouchListener {
 		gameOverText.setPosition(mCamera.getCenterX(), mCamera.getCenterY());
 		attachChild(gameOverText);
 		gameOverDisplayed = true;
+		
+		mEngine.registerUpdateHandler(new TimerHandler(2f, new ITimerCallback() {
+			
+			@Override
+			public void onTimePassed(TimerHandler pTimerHandler) {
+				mEngine.unregisterUpdateHandler(pTimerHandler);
+				onFinish();
+			}
+		}));
 	}
 
 	@Override
 	public void unloadResources() {
-
+		mCamera.setHUD(null);
+		gameTextureAtlas.unload();
+		
 	}
 
 	@Override

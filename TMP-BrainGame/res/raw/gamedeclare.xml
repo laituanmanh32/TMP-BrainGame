@@ -1,12 +1,22 @@
 <GameDeclare>
 	<Game>
 		<Name>Jumper Game</Name>
-		<Catalog>centralization</Catalog>
+		<Catalog>Casual</Catalog>
 		<ClassPath>tmp.braingame.game.JumperGame</ClassPath>
 	</Game>
     <Game>
         <Name>Freaky Shape</Name>
-        <Catalog>centralization</Catalog>
+        <Catalog>Casual</Catalog>
         <ClassPath>tmp.braingame.game.FreakyShapeGame</ClassPath>
+    </Game>
+    <Game>
+        <Name>Mar's Money</Name>
+        <Catalog>Calculation</Catalog>
+        <ClassPath>tmp.braingame.game.JumperGame</ClassPath>
+    </Game>
+    <Game>
+        <Name>Spider</Name>
+        <Catalog>Logic</Catalog>
+        <ClassPath>tmp.braingame.game.JumperGame</ClassPath>
     </Game>
 </GameDeclare>

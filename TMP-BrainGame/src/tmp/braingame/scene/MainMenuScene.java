@@ -4,19 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.scene.background.ParallaxBackground;
+import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
+import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.TextMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
+import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
+import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
+import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TextureRegionFactory;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
 
+import tmp.braingame.config.CameraConfig;
 import tmp.braingame.main.GameSceneFactory;
 import tmp.braingame.main.ResourcesManager;
 import tmp.braingame.main.ScenesManager;
@@ -24,6 +36,8 @@ import tmp.braingame.main.ScenesManager.SceneType;
 import tmp.braingame.type.GameQueue;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.text.style.BackgroundColorSpan;
 
 public class MainMenuScene extends BaseScene implements
 		IOnMenuItemClickListener {
@@ -37,6 +51,10 @@ public class MainMenuScene extends BaseScene implements
 
 	private Font font;
 
+	private ITextureRegion backgroundTexture;
+	private BitmapTextureAtlas backgroundAtlas;
+	private SpriteBackground background;
+
 	private final int MENU_PLAY_DAILY = 0;
 	private final int MENU_PLAY_PRACTICE = 1;
 
@@ -45,7 +63,7 @@ public class MainMenuScene extends BaseScene implements
 	@Override
 	public void createScene() {
 		// Create Background
-		setBackground(new Background(Color.BLUE));
+		// setBackground(new Background(Color.BLUE));
 		// attachChild(new Text(CameraConfig.CAMERA_WIDTH / 2,
 		// CameraConfig.CAMERA_HEIGHT / 2, font, "This is Menu Screen!",
 		// vbom));
@@ -69,6 +87,13 @@ public class MainMenuScene extends BaseScene implements
 
 		setChildScene(menuMain);
 
+		// ---------------------
+		// Menu Background
+		// ---------------------
+
+		setBackground(background);
+		setBackgroundEnabled(true);
+
 	}
 
 	@Override
@@ -90,6 +115,21 @@ public class MainMenuScene extends BaseScene implements
 				Color.BLACK_ABGR_PACKED_INT);
 		font.load();
 
+		// -----------------------
+		// Load Background image
+		// -----------------------
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+		backgroundAtlas = new BitmapTextureAtlas(mActivity.getTextureManager(),
+				779, 1299);
+		backgroundTexture = BitmapTextureAtlasTextureRegionFactory
+				.createFromAsset(backgroundAtlas, mActivity,
+						"menubackground.png", 0, 0);
+		backgroundAtlas.load();
+		background = new SpriteBackground(new Sprite(
+				480/2, 800/2,
+				backgroundTexture, mActivity.getVertexBufferObjectManager()));
+		
+
 		// -----------------
 		// Load Menu content
 		// -----------------
@@ -109,16 +149,16 @@ public class MainMenuScene extends BaseScene implements
 		menuMain.setPosition(0, 0);
 
 		final IMenuItem dailyPlay = new ScaleMenuItemDecorator(
-				new TextMenuItem(MENU_PLAY_DAILY, font, "Daily Test", vbom),
+				new TextMenuItem(MENU_PLAY_DAILY, font, "Daily Exercise", vbom),
 				1.2f, 1);
 		final IMenuItem pratice = new ScaleMenuItemDecorator(new TextMenuItem(
-				MENU_PLAY_PRACTICE, font, "Pratice", vbom), 1.2f, 1);
-
+				MENU_PLAY_PRACTICE, font, "Single Exercise", vbom), 1.2f, 1);
+		
+		
+		
 		menuMain.addMenuItem(dailyPlay);
 		menuMain.addMenuItem(pratice);
 		
-		
-
 		// ----------------------------------
 		// Create catalog menu scene and game of that catalog
 		// ----------------------------------
@@ -135,14 +175,14 @@ public class MainMenuScene extends BaseScene implements
 			// Game menu scene item
 			MenuScene gameMenu = new MenuScene(mCamera);
 			List<String> gameName = gameArray.get(i);
-			for(int j = 0 ; j < gameName.size(); j++){
+			for (int j = 0; j < gameName.size(); j++) {
 				final IMenuItem itemGame = new ScaleMenuItemDecorator(
-						new TextMenuItem(j, font, gameName.get(j), vbom), 1.2f, 1);
+						new TextMenuItem(j, font, gameName.get(j), vbom), 1.2f,
+						1);
 				gameMenu.addMenuItem(itemGame);
 			}
 			menuGame.add(gameMenu);
 		}
-
 	}
 
 	@Override

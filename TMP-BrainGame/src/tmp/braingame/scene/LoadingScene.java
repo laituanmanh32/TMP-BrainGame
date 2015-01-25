@@ -16,7 +16,6 @@ public class LoadingScene extends BaseScene {
 				CameraConfig.CAMERA_HEIGHT / 2,
 				tmp.braingame.main.ResourcesManager.getInstance().generalFont,
 				"Loading ...", vbom));
-
 	}
 
 	@Override

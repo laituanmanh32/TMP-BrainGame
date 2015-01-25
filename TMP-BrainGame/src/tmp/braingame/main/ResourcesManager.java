@@ -48,6 +48,7 @@ public class ResourcesManager {
 		MusicFactory.setAssetBasePath("sfx/backgroundmusic/");
 		try {
 			mMusic = MusicFactory.createMusicFromAsset(gameActivity.getMusicManager(), gameActivity, "bgm_menu.mp3");
+			mMusic.setLooping(true);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -11,6 +11,7 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.engine.options.resolutionpolicy.FixedResolutionPolicy;
+import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
 
@@ -33,7 +34,7 @@ public class GameActivity extends BaseGameActivity {
 		camera = new BoundCamera(0, 0, CameraConfig.CAMERA_WIDTH,
 				CameraConfig.CAMERA_HEIGHT);
 		final EngineOptions engine = new EngineOptions(true,
-				CameraConfig.SCREEN_OERIENTATION, new FixedResolutionPolicy(CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT),
+				CameraConfig.SCREEN_OERIENTATION, new RatioResolutionPolicy(CameraConfig.CAMERA_WIDTH, CameraConfig.CAMERA_HEIGHT),
 				camera);
 		engine.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);
 		engine.setWakeLockOptions(WakeLockOptions.SCREEN_ON);
